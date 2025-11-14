@@ -1,0 +1,350 @@
+% Template for UIC presentations with LaTeX beamer
+% by Usama Muneeb <umunee2@uic.edu>
+% 2025/11 modified by Stefan Helmert <stefan.helmert@htw.dresden.de> for HTW Dresden 
+% 
+% This template is a derivative of the SINTEF template
+% by Federico Zenith <federico.zenith@sintef.no>, which in turn is
+% derived (through several iterations) from Håvard Berland's
+% beamerthementnu class.
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+\ProvidesPackage{beamerthemeuic}[2023/04/26]
+
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+
+% Force 16:9 aspect ratio
+\RequirePackage{geometry}
+\geometry{paperwidth=16cm,paperheight=9cm}
+
+\RequirePackage{uicfont}
+\renewcommand{\familydefault}{\sfdefault}
+
+\RequirePackage{graphicx,uiccolor}
+
+
+
+
+\newcommand{\authortitle}[2][]{%
+	\def\beamer@authortitle{#2}% lange Form
+	\def\beamer@shortauthortitle{#1}% kurze Form optional
+}
+
+\newcommand{\insertauthortitle}{%
+	\ifx\beamer@shortauthortitle\@empty
+	\beamer@authortitle
+	\else
+	\beamer@shortauthortitle
+	\fi
+}
+
+
+% No navigation symbols
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{page number in head/foot}[totalframenumber]%
+\setbeamertemplate{htwd cd head/foot}{%
+	\tiny
+
+	\hspace{8mm}{\insertdate}\hspace{4mm} \textbf{HTWD} / {\insertinstitute} / {\insertauthor}\hfill\insertframenumber{}/\inserttotalframenumber
+}
+
+
+\newcommand{\@footlinepayoff}{\usebeamertemplate{htwd cd head/foot}}
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\textwidth,ht=5mm,dp=3mm,rightskip=1cm]{footline}
+  \usebeamerfont{footline}\hfill\@footlinepayoff
+  \end{beamercolorbox}
+}
+
+% Set footline AND coordinate blocks with it
+\newcommand{\footlinecolor}[1]{% if #1 is empty, makes footline transparent
+  \ifstrempty{#1}{%
+    \renewcommand{\@footlinepayoff}{}
+    \setbeamercolor{footline}{bg=}
+    \setbeamercolor{block title}{fg=white,bg=black}
+    \setbeamercolor{block body}{fg=white,bg=black}
+  }{
+    \renewcommand{\@footlinepayoff}{\usebeamertemplate{htwd cd head/foot}}
+    \setbeamercolor{footline}{fg=black,bg=#1}
+    \setbeamercolor{block title}{fg=black,bg=#1}
+    \setbeamercolor{block body}{fg=black,bg=#1}
+  }%
+}
+\footlinecolor{} % Default: no footline (enabled after title page)
+
+\pgfdeclareimage[height=0.06\paperheight]{collogo}{assets/htwd_hor_col.pdf}
+\pgfdeclareimage[width=0.09\paperwidth]{whitelogo}{assets/circular_white.pdf}
+\pgfdeclareimage[width=0.09\paperwidth]{nologo}{assets/placeholder.png}
+\newcommand{\@UIClogo}{collogo}
+
+% Set colours
+% NOTE! Beamer colors should be set in the preamble. It often works fine in the 
+%       document itself, but NOT for normal text foreground.
+%       \themecolor should only be called from the preamble.
+\newcommand{\themecolor}[1]{
+	\ifstrequal{#1}{dark}{%
+		\setbeamercolor{normal text}{fg=white,bg=black}
+		\setbeamercolor{structure}{fg=white}
+		\renewcommand{\@UIClogo}{whitelogo}
+		\setbeamercolor{block title}{fg=black,bg=steelgray}
+		\setbeamercolor{block body}{fg=black,bg=steelgray}
+		\usebeamercolor[fg]{normal text}
+	}{}
+	\ifstrequal{#1}{light}{%
+		\setbeamercolor{normal text}{fg=black,bg=white}
+		\setbeamercolor{structure}{fg=black}
+		\renewcommand{\@UIClogo}{collogo}
+		\setbeamercolor{block title}{fg=white,bg=black}
+		\setbeamercolor{block body}{fg=white,bg=black}
+		\usebeamercolor[fg]{normal text}
+	}{}
+	\ifstrequal{#1}{lightnologo}{%
+		\setbeamercolor{normal text}{fg=black,bg=white}
+		\setbeamercolor{structure}{fg=black}
+		\renewcommand{\@UIClogo}{nologo}
+		\setbeamercolor{block title}{fg=white,bg=black}
+		\setbeamercolor{block body}{fg=white,bg=black}
+		\usebeamercolor[fg]{normal text}
+	}{}
+}
+\themecolor{light}
+
+\setbeamercolor{title}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=uicred}
+\setbeamercolor{author}{fg=black}
+\setbeamercolor{date}{fg=black}
+
+\setbeamerfont{authortitle}{size=\scriptsize}
+\setbeamerfont{author}{series=\bfseries,size=\scriptsize}
+\setbeamerfont{institute}{size=\scriptsize}
+\setbeamerfont{date}{size=\scriptsize}
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{subtitle}{series=\mdseries,size=\footnotesize}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{framesubtitle}{series=\mdseries}
+\setbeamerfont{footline}{size=\scriptsize}
+\setbeamerfont{block title}{series=\centering\bfseries}
+
+% normal text must be small - also changes spacing between other text
+\renewcommand{\normalsize}{\fontsize{9pt}{11pt}\selectfont}
+
+
+% Code to get prettier boxes
+\setbeamertemplate{blocks}[rounded]
+
+% Bullets in several levels
+\setbeamertemplate{itemize item}{\textendash}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{itemize subsubitem}{\ensuremath{\circ}}
+
+\newenvironment{colorblock}[3][white]{%
+	\begingroup
+	\setbeamercolor{block title}{fg=#1,bg=#2}
+	\setbeamercolor{block body} {fg=#1,bg=#2}
+	\begin{block}{#3}
+	}{%
+	\end{block}
+	\endgroup
+}
+
+% Put the logo in each slide's top left area
+%\setbeamertemplate{headline}{test1}
+
+
+
+
+
+\newlength{\titlemanualoffset}
+\setlength{\titlemanualoffset}{0ex}
+% Define frame title and subtitle layout
+\setbeamertemplate{frametitle}{%
+  \vspace*{5mm}
+  \vspace*{\titlemanualoffset}
+  \begin{beamercolorbox}[leftskip=0cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle\\
+    % Setting an invisible placeholder subtitle will fix the title in a constant position
+    % This is due to the way the default template is defined in `beamerouterthemedefault.sty'
+    \ifx\insertframesubtitle\empty
+    \usebeamerfont{framesubtitle}\usebeamercolor[bg]{normal text}Placeholder
+    \else
+    \usebeamerfont{framesubtitle}\insertframesubtitle
+    \fi
+  \end{beamercolorbox}
+}
+
+\newlength{\titleboxwidth}
+% Define the title page
+
+\setbeamertemplate{title page}{%
+
+  %\vskip-20mm 
+  %\hspace{-12mm}% Pull back the box in an inelegant way - but it works!
+  \begin{beamercolorbox}[wd=\titleboxwidth]{title}%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south west, xshift=8mm, yshift=-1.2cm, text width=\titleboxwidth] at (current page.north west) {%
+  	    \pgfuseimage{\@UIClogo}
+    };
+  
+	\node[anchor=south west, xshift=8mm, yshift=3.5cm, text width=\titleboxwidth] at (current page.south west) {%
+		{\usebeamerfont{title}\inserttitle\\[3pt]\usebeamerfont{subtitle}\insertsubtitle}
+	};
+
+	\node[anchor=south west, xshift=8mm, yshift=1.5cm, text width=\titleboxwidth] at (current page.south west) {%
+		{   
+			\\
+			{\usebeamerfont{authortitle}\usebeamercolor[fg]{author}\insertauthortitle} \\
+			{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor} \\
+			{\usebeamerfont{institute}\usebeamercolor[fg]{author}\insertinstitute}
+		}
+	};
+	\node[anchor=south west, xshift=8mm, yshift=0.7cm] at (current page.south west) {%
+		{\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate}
+	};
+\end{tikzpicture}
+  
+    
+  
+   
+   
+   	
+
+
+  \end{beamercolorbox}
+  
+  
+
+}
+
+\newcommand{\TikzSplitSlide}[1]{%
+  \rule{0.4\paperwidth}{0pt}%
+  \begin{tikzpicture}[remember picture,overlay,shift={(0.1\paperwidth,-0.5\paperheight)}]
+    \clip (-0.2\paperwidth,-0.5\paperheight) -- 
+          ( 0.5\paperwidth,-0.5\paperheight) -- 
+          ( 0.5\paperwidth, 0.5\paperheight) -- 
+          ( 0.3\paperwidth, 0.5\paperheight) -- cycle; 
+    \node at (0.1\paperwidth,0) {%
+      \includegraphics[height=1.1\paperheight]{#1}%
+    };
+  \end{tikzpicture}
+}
+
+\newbool{splittitle}
+\newcommand{\@TitleBackground}{}
+\newcommand{\titlebackground}{\@ifstar{\SplitBackground}{\FullBackground}}
+\newcommand{\FullBackground}[1]{\renewcommand{\@TitleBackground}{#1}}
+\newcommand{\SplitBackground}[1]{%
+	\booltrue{splittitle}%
+	\renewcommand{\@TitleBackground}{#1}%
+
+	% a white titlebox is needed on a full background, but looks bad on
+	% a split background (and is not needed when left half is already white)
+	% we therefore set titlebox background to transparent for split backgrounds
+	\setbeamercolor{title}{bg=}
+}
+
+\renewcommand{\maketitle}{
+\begingroup
+  \ifdefempty{\@TitleBackground}{}{% Skip if \@TitleBackground is empty
+    \setbeamertemplate{background}{%
+      \ifbool{splittitle}{%
+        \TikzSplitSlide{\@TitleBackground}
+      }{% Normal, full-screen background
+        \includegraphics[width=\paperwidth]{\@TitleBackground}
+        % \includegraphics[height=\paperheight]{\@TitleBackground}
+      }
+    }
+  }
+  \begin{frame}%
+  \titlepage%
+  \end{frame}%
+\endgroup
+}
+
+\newenvironment{chapter}[3][]{% Args: image (optional), color, frame title
+  \begingroup
+  \themecolor{blue}
+  \setbeamertemplate{footline}{}
+  \ifstrequal{#2}{white}{ % Use blue text on white background
+    \setbeamercolor{frametitle}{fg=uicblue}
+    \setbeamercolor{normal text}{fg=uicblue,bg=#2}
+  }{}
+  \ifstrequal{#2}{expowhite}{ % Also use blue text on expowhite background
+    \setbeamercolor{frametitle}{fg=black}
+    \setbeamercolor{normal text}{fg=black,bg=#2}
+  }{ % otherwise use white text
+    \setbeamercolor{frametitle}{fg=white}
+    \setbeamercolor{normal text}{fg=white,bg=#2}
+  }
+  \ifstrempty{#1}{}{\setbeamertemplate{background}{\TikzSplitSlide{#1}}}
+  \setbeamertemplate{frametitle}{%
+    \vspace*{8ex}
+    \hspace*{0.0125\textwidth}% alignment with a with a circular logo is tricky
+    \begin{beamercolorbox}[wd=0.45\textwidth]{frametitle}
+      \usebeamerfont{frametitle}\insertframetitle\\
+      \usebeamerfont{framesubtitle}\insertframesubtitle
+    \end{beamercolorbox}
+  }
+  \begin{frame}{#3}
+  \hspace*{0.05\textwidth}%
+  \minipage{0.35\textwidth}%
+  \usebeamercolor[fg]{normal text}%
+}{%
+  \endminipage
+  \end{frame}
+  \endgroup
+  \usebeamercolor[fg]{normal text}
+}
+
+\newenvironment{sidepic}[2]{% Args: image, frame title
+  \begingroup
+  \setbeamertemplate{background}{%
+  \hspace*{0.6\paperwidth}%
+  \includegraphics[height=\paperheight]{#1}%
+  }
+  \setbeamertemplate{frametitle}{% Same as normal, but with right skip
+    \vspace*{5mm}
+    \vspace*{\titlemanualoffset}
+    \begin{beamercolorbox}[leftskip=2cm,rightskip=0.4\textwidth]{frametitle}%
+      \usebeamerfont{frametitle}\insertframetitle\\
+      % Setting an invisible placeholder subtitle will fix the title in a constant position
+      % This is due to the way the default template is defined in `beamerouterthemedefault.sty'
+      \ifx\insertframesubtitle\empty
+      \usebeamerfont{framesubtitle}\usebeamercolor[bg]{normal text}Placeholder
+      \else
+      \usebeamerfont{framesubtitle}\insertframesubtitle
+      \fi
+    \end{beamercolorbox}
+  }
+  \begin{frame}{#2}
+  \minipage{0.6\textwidth}%
+}{%
+  \endminipage
+  \end{frame}
+  \endgroup
+}
+
+\newcommand{\backmatter}{
+\begingroup
+  \setbeamertemplate{footline}{}
+  \themecolor{dark}
+  \begin{frame}[c]
+    \centering
+    \begin{minipage}{0.4\textwidth}
+      \usebeamercolor[fg]{normal text}
+      \centering\huge{Thank you!}
+    \end{minipage}
+  \end{frame}
+\endgroup
+}
