@@ -7,6 +7,7 @@
 
 \usetheme{uic}
 \usepackage{amsfonts,amsmath,oldgerm,algorithm,algpseudocode}
+\usepackage{graphicx}
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 
 
@@ -68,28 +69,85 @@
 	\end{itemize}
 \end{frame}
 	
+\begin{frame}[fragile]{Architecture}
+	\framesubtitle{The modular setup of the data path}
+\includegraphics[height=8cm]{imgs/architecture}
+\end{frame}
 	
+\begin{frame}[fragile]{Design for Openness}
+	\framesubtitle{Tear the barriers down!}
 	
-\begin{frame}[fragile]{OSH Principles}
-	\framesubtitle{Requirements for the idea behind openness}
-
-	Design decisions
 	\begin{itemize}
-		\item design for development
-		\item design for debugability
+		\item complete
+		\item diagnosable
+		\item flexible
+		\item tolerant
+		\item simple
 		\item understandable
 		\item reproducible
-		\item makeable
 		\item transparent
 		\item safe
 		\item interoperable
 		\item accessible
-		\item complete
 	\end{itemize}
 
-	\textbf{We need OSH designed with an open source mindset, not just publishing proprietary concepts.}
+	\textbf{Openness as the core value}
+
+	We need OSH designed with an open source mindset, not just publishing proprietary concepts.
 \end{frame}
 	
+\begin{frame}[fragile]{Complete}
+	\framesubtitle{The whole ecosystem is available.}
+	\begin{itemize}
+		\item Mechanics
+		\item Electronics
+		\item Firmware
+		\item Software
+		\item Tools
+	\end{itemize}
+\end{frame}
+	
+\begin{frame}[fragile]{Accessible}
+	\framesubtitle{No proprietary requirements}
+	\begin{itemize}
+		\item OSS tools
+		\item Cheap hardware tools
+		\item Manufacturing service friendly
+		\item low craft skill requirements
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interoperable}
+	\framesubtitle{Adds value to third party infrastructure.}
+	\begin{itemize}
+		\item Periphery for available PC software
+		\item Retrofit for old CMMs
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Safe}
+	\framesubtitle{No risky requirements during the whole life cycle}
+	\begin{itemize}
+		\item No machining
+		\item 5V USB only
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Tolerant}
+	\framesubtitle{Robust against mistreatment}
+	\begin{itemize}
+		\item Electrical protection
+		\item Replaceable parts 
+	\end{itemize}
+\end{frame}
+	
+\begin{frame}[fragile]{Flexible}
+	\framesubtitle{Foundation for further development}
+	\begin{itemize}
+		\item Mechanics: parameterized implicit surface geometry
+		\item Modular design 
+	\end{itemize}
+\end{frame}
 	
 	
 	
