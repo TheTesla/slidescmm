@@ -7,7 +7,8 @@
 
 \usetheme{uic}
 \usepackage{amsfonts,amsmath,oldgerm,algorithm,algpseudocode}
-\usepackage{graphicx}
+\usepackage{graphicx,multicol}
+\usepackage{jigsaw}
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 
 
@@ -54,10 +55,31 @@
 	
 	
 \begin{frame}[fragile]{Coordinate Measurement Machine}
-\framesubtitle{What is it? In which areas is it used? How is it operated?}
-		
+	\framesubtitle{What is it? In which areas is it used? How is it operated?}
+	\includegraphics[height=5cm]{imgs/Patent_US8438746B2}
+	\includegraphics[height=5cm]{imgs/Patent_US20050151963A1}
+	\begin{multicols}{3}
+	\begin{itemize}
+		\item Tool and Die Verification
+		\item Surface and Profile Measurement
+		\item Reverse Engineering
+		\item Quality Assurance \& Statistical Process Control
+		\item Calibration of Gauges and Fixtures
+		\item Prototyping and R\&D
+	\end{itemize}
+	\end{multicols}
 \end{frame}
 	
+	
+\begin{frame}[fragile]{OSH CMM}
+	\framesubtitle{PoC first check}
+	\includegraphics[height=8cm]{imgs/OSHCMMold}
+\end{frame}
+
+\begin{frame}[fragile]{OSH CMM}
+	\framesubtitle{Evoloved version}
+	\includegraphics[height=8cm]{imgs/OSHCMMcomplete}
+\end{frame}
 	
 \begin{frame}[fragile]{Open Source Hardware}
 	\framesubtitle{OSH as a necessity not as a nice-to-have}
@@ -71,7 +93,7 @@
 	
 \begin{frame}[fragile]{Architecture}
 	\framesubtitle{The modular setup of the data path}
-\includegraphics[height=8cm]{imgs/architecture}
+	\includegraphics[height=8cm]{imgs/architecture}
 \end{frame}
 	
 \begin{frame}[fragile]{Design for Openness}
@@ -98,13 +120,39 @@
 	
 \begin{frame}[fragile]{Complete}
 	\framesubtitle{The whole ecosystem is available.}
-	\begin{itemize}
-		\item Mechanics
-		\item Electronics
-		\item Firmware
-		\item Software
-		\item Tools
-	\end{itemize}
+	
+\begin{tikzpicture}[scale=3]
+	
+\path (2,-2) pic[
+fill=yellow, draw=black, thick,
+scale=3, pic text={Software},
+pic text options={text=black}
+]{piece={1}{1}{0}{0}};
+	
+	
+\path (2,-3) pic[
+fill=green, draw=black, thick,
+scale=3, pic text={Mechanics},
+pic text options={text=black}
+]{piece={0}{-1}{-1}{0}};	
+
+
+\path (3,-2) pic[
+fill=cyan, draw=black, thick,
+scale=3, pic text={Firmware},
+pic text options={text=black}
+]{piece={1}{0}{0}{-1}};	
+
+\path (3,-3) pic[
+fill=pink, draw=black, thick,
+scale=3, pic text={Electronics},
+pic text options={text=black}
+]{piece={0}{0}{-1}{1}};	
+	
+	
+\node[circle, draw=black, fill=lightgray, minimum size=1.5cm] at (3,-2) {Tools};
+\end{tikzpicture}
+	
 \end{frame}
 	
 \begin{frame}[fragile]{Accessible}
