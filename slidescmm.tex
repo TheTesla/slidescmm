@@ -12,6 +12,10 @@
 \usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{array}
 \usepackage{qrcode}
+\usepackage{listings}
+
+
+
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}@{}}
 
@@ -87,6 +91,7 @@
 \begin{frame}[fragile]{Open Source Hardware}
 	\framesubtitle{OSH as a necessity not as a nice-to-have}
 	Fill market gap only achievable with OSH 
+
 	\begin{itemize}
 		\item educate
 		\item customize
@@ -102,14 +107,24 @@
 \begin{frame}[fragile]{Design for Openness}
 	\framesubtitle{Tear the barriers down!}
 	
+	
+	\begin{columns}
+	\begin{column}{0.5\textwidth}
+		
 	\begin{itemize}
 		\item complete
 		\item diagnosable
-		\item flexible
-		\item adaptive
+		\item adaptable
 		\item tolerant
 		\item simple
 		\item understandable
+	\end{itemize}
+
+		
+	\end{column}
+	\begin{column}{0.5\textwidth}  %%<--- here
+		
+	\begin{itemize}
 		\item reproducible
 		\item reusable
 		\item transparent
@@ -117,6 +132,12 @@
 		\item interoperable
 		\item accessible
 	\end{itemize}
+	
+		
+	\end{column}
+\end{columns}
+	
+	\vspace{12mm}
 
 	\textbf{Openness as the core value}
 
@@ -162,20 +183,74 @@ pic text options={text=black}
 	
 \begin{frame}[fragile]{Accessible}
 	\framesubtitle{No proprietary requirements}
-	\begin{itemize}
-		\item OSS tools
-		\item Cheap hardware tools
-		\item Manufacturing service friendly
-		\item Low craft skill requirements
-	\end{itemize}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}
+				\item OSS tools
+				\begin{itemize}
+					\item \emph{Arduino IDE}
+					\item \emph{KiCad}
+					\item \emph{FreeCad}
+					\item \emph{xyzCad}
+					\item \emph{OrcaSlicer}
+				\end{itemize}
+				\item Cheap hardware tools
+				\begin{itemize}
+					\item 3d printer
+					\item Soldering iron
+					\item Screwdriver
+				\end{itemize}
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}  %%<--- here
+			\begin{itemize}
+				\item Manufacturing service friendly
+				\item Low craft skill requirements
+				\begin{itemize}
+					\item Mounting
+					\item No machining
+					\item No welding
+					\item No drilling
+					\item No lasercutting
+					\item Soldering $\rightarrow$ PCBA service
+					\item 3d printing $\rightarrow$ 3d printing service
+				\end{itemize}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+
 \end{frame}
+
+\begin{frame}[fragile]{Simple}
+	\framesubtitle{Plug and Play, default operation, stand alone mode}
+	\includegraphics[width=.95\linewidth]{imgs/host_software_1.png}
+\end{frame}
+
 
 \begin{frame}[fragile]{Interoperable}
 	\framesubtitle{Adds value to third party infrastructure.}
+	
+	\begin{columns}
+		\begin{column}{0.3\textwidth}
+			
 	\begin{itemize}
-		\item Periphery for available PC software
+		\item available software
+		\item Replace rotary encoders
 		\item Retrofit for old CMMs
+		\item \emph{Arduino} with network
 	\end{itemize}
+			
+			
+		\end{column}
+		\begin{column}{0.7\textwidth}  %%<--- here
+			
+		\includegraphics[width=.95\linewidth]{imgs/logicboard}
+			
+		\end{column}
+	\end{columns}
+	
+
+
 \end{frame}
 
 \begin{frame}[fragile]{Safe}
@@ -196,39 +271,87 @@ pic text options={text=black}
 
 \begin{frame}[fragile]{Tolerant}
 	\framesubtitle{Robust against mistreatment}
-	
 	\begin{tabular}{@{} C{0.75\linewidth} C{0.3\linewidth} @{} }
 		\includegraphics[width=.95\linewidth]{imgs/protectionschem} & \includegraphics[width=.95\linewidth]{imgs/protection} \\[\abovecaptionskip]
 		Electrical protection of the rotary encoder & PCB top side
 	\end{tabular}
 \end{frame}
 	
-\begin{frame}[fragile]{Flexible}
+\begin{frame}[fragile]{Diagnosable}
+	\framesubtitle{Self-test circuits are part of the main logic board.}
+	\includegraphics[width=.95\linewidth]{imgs/diagnoseschem}
+\end{frame}
+	
+\begin{frame}[fragile]{Adaptable}
 	\framesubtitle{Foundation for further development}
+
+	\textbf{Mechanics} parameterized implicit surface geometry
 	\begin{itemize}
-		\item Mechanics: parameterized implicit surface geometry
-		\item Modular design 
+		\item implicit chamfers
+		\item AI-ready
+		\item compact
+		\item free-style shapes
 	\end{itemize}
+
+
+	\begin{lstlisting}[language=Python]
+@njit
+def fz_thread_profile(pnt, a=1.0):
+	y = pnt[1]
+	if abs(y) > 2 * a:
+	return y
+	x = pnt[0] * 2 * np.pi
+	sg = np.sign(np.sin(x))
+	snglr = 2**-20 - 2**-19 * sg
+	p = a / (-np.sin(x) / 2 + snglr)
+	q = y / (np.sin(x) + snglr) - 1.0
+	return a * (-p - sg * np.sqrt(max(0, p**2 - 4 * q)))
+	\end{lstlisting}
+	
+
+
 \end{frame}
 	
 \begin{frame}[fragile]{Build and Contribute}
 	\framesubtitle{Follow me on GitHub}
-	\begin{minipage}[t]{0.6\linewidth}
-		\qrcode[height=5cm]{https://github.com/TheTesla/HTWD-OSH-CMM-Arm}
-		
-		\vspace{5mm}
-		
-		\url{https://github.com/TheTesla/HTWD-OSH-CMM-Arm} 
-	\end{minipage}
-	\hfill
-	\begin{minipage}[t]{0.39\linewidth}
-		\textbf{Funded by}
-		
-		\vspace{5mm}
-		
-		\includegraphics{imgs/logo-vwstiftung-dark}
+	
+	
+	\begin{columns}
+		\begin{column}{0.6\textwidth}
 
-	\end{minipage}
+		\qrcode[height=5cm]{https://github.com/TheTesla/HTWD-OSH-CMM-Arm}
+
+\vspace{5mm}
+
+\url{https://github.com/TheTesla/HTWD-OSH-CMM-Arm} 
+
+
+		\end{column}
+		\begin{column}{0.4\textwidth}  %%<--- here
+
+		M.Sc. \\
+\textbf{Stefan Helmert} \\
+Faculty of Informatics / Mathematics \\
+T +49 351 462 2166 \\
+M +49 177 850 6921 \\
+stefan.helmert@htw-dresden.de \\
+
+\vspace{10mm}
+
+\textbf{Funded by} \\
+
+\vspace{5mm}
+
+\includegraphics{imgs/logo-vwstiftung-dark} \\
+
+\vspace*{8mm}
+
+
+		\end{column}
+	\end{columns}
+	
+	
+	
 
 	
 	
